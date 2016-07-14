@@ -24,6 +24,10 @@
             return argument;
         }
         
+        function jsbridgeTest(){
+            location.href ='jsbridge://method?a=2&b=3#h5MethodTag'
+        }
+        
             </script>
         
     </head>
@@ -32,13 +36,14 @@
         
         <div style="margin-top: 100px">
             <h1>Test how to use objective-c call js</h1>
+            <input type="button" value="Call ObjC URLSchemes" onclick="jsbridgeTest()">
             <input type="button" value="Call ObjC system camera" onclick="OCModel.callSystemCamera()">
-                <input type="button" value="Call ObjC system alert" onclick="OCModel.showAlertMsg('js title', 'js message')">
+            <input type="button" value="Call ObjC system alert" onclick="OCModel.showAlertMsg('js title', 'js message')">
         </div>
         
         <div>
             <input type="button" value="Call ObjC func with JSON " onclick="OCModel.callWithDict({'name': 'testname', 'age': 10, 'height': 170})">
-                <input type="button" value="Call ObjC func with JSON and ObjC call js func to pass args." onclick="OCModel.jsCallObjcAndObjcCallJsWithDict({'name': 'testname', 'age': 10, 'height': 170})">
+            <input type="button" value="Call ObjC func with JSON and ObjC call js func to pass args." onclick="OCModel.jsCallObjcAndObjcCallJsWithDict({'name': 'testname', 'age': 10, 'height': 170})">
         </div>
         
         <div>

@@ -44,6 +44,29 @@
 }
 
 #pragma mark - UIWebViewDelegate
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+    NSURL *URL = [request URL];
+    NSString *scheme = [URL scheme];
+    NSString *host = [URL host];
+    
+    if ([scheme isEqualToString:@"jsbridge"]) {
+        NSURLComponents *componets = [[NSURLComponents alloc] initWithURL:URL resolvingAgainstBaseURL:NO];
+        NSString *host = componets.host;
+        NSArray *queryItems = componets.queryItems;
+        
+        __block NSURL *webURL = nil;
+        [queryItems enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSURLQueryItem *queryItem = obj;
+            if ([queryItem.name isEqualToString:@"url"] && queryItem.value) {
+                webURL = [NSURL URLWithString:queryItem.value];
+            }
+        }];
+        
+        
+        return NO;
+    }
+    return YES;
+}
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     self.jsContext = [webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
     // 通过模型调用方法，这种方式更好些。
